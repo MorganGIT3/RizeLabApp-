@@ -42,7 +42,7 @@ export function Dashboard() {
           {/* Header */}
           <div className="p-8 mb-8">
             <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
-            <p className="text-gray-400">Bienvenue dans votre espace SmartApp Academy™</p>
+            <p className="text-gray-400">Bienvenue dans votre espace RizeAppHub™</p>
           </div>
 
           {/* Hero Section */}

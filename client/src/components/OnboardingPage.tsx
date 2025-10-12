@@ -1,466 +1,52 @@
-import React, { useEffect } from 'react';
-import { motion, useMotionTemplate, useMotionValue, animate } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useDramaticSound } from '@/hooks/useDramaticSound';
+import { getCurrentUser } from '@/lib/supabase';
 
 interface OnboardingPageProps {
   onContinue: () => void;
 }
 
-// Couleurs bleues seulement
-const COLORS_BLUE = ["#1E67C6", "#3B82F6", "#0EA5E9", "#06B6D4"];
-
 export function OnboardingPage({ onContinue }: OnboardingPageProps) {
-  const color = useMotionValue(COLORS_BLUE[0]);
   const { playDramaticSound } = useDramaticSound();
+  const [userName, setUserName] = useState<string>('');
 
   useEffect(() => {
-    animate(color, COLORS_BLUE, {
-      ease: "easeInOut",
-      duration: 10,
-      repeat: Infinity,
-      repeatType: "mirror",
-    });
-  }, [color]);
+    const fetchUserName = async () => {
+      try {
+        const user = await getCurrentUser();
+        if (user) {
+          // Utiliser les métadonnées de l'utilisateur pour récupérer le nom
+          const firstName = user.user_metadata?.first_name || 
+                           user.user_metadata?.full_name?.split(' ')[0] || 
+                           user.email?.split('@')[0] || '';
+          setUserName(firstName);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération du nom:', error);
+      }
+    };
+
+    fetchUserName();
+  }, []);
+  
+  const title = userName ? `Bienvenue ${userName} dans ton app RizeAcadémie` : "Bienvenue dans RizeAcadémie";
+  const words = title.split(" ");
 
   const handleDashboardClick = () => {
     playDramaticSound();
-    onContinue();
+    onContinue(); // Accès direct au dashboard
   };
 
-  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
-
   return (
-    <>
-      <style jsx>{`
-        .styled-button {
-          --white: #e7f4ff;
-          --blue-100: #b1d4fd;
-          --blue-200: #90c3ff;
-          --blue-300: #89b4f2;
-          --blue-400: #2686e2;
-          --blue-500: #2b5f83;
-          --radius: 18px;
-
-          border-radius: var(--radius);
-          outline: none;
-          cursor: pointer;
-          font-size: 23px;
-          font-family: Arial;
-          background: transparent;
-          letter-spacing: 0px;
-          border: 0;
-          position: relative;
-          width: 300px;
-          height: 80px;
-          transform: rotate(353deg) skewX(4deg);
-        }
-
-        .bg {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          filter: blur(1px);
-        }
-        .bg::before,
-        .bg::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: calc(var(--radius) * 1.1);
-          background: var(--blue-500);
-        }
-        .bg::before {
-          filter: blur(5px);
-          transition: all 0.3s ease;
-          box-shadow:
-            -7px 6px 0 0 rgb(75 130 155 / 40%),
-            -14px 12px 0 0 rgb(75 130 155 / 30%),
-            -21px 18px 4px 0 rgb(75 130 155 / 25%),
-            -28px 24px 8px 0 rgb(75 130 155 / 15%),
-            -35px 30px 12px 0 rgb(75 130 155 / 12%),
-            -42px 36px 16px 0 rgb(75 130 155 / 8%),
-            -56px 42px 20px 0 rgb(75 130 155 / 5%);
-        }
-
-        .wrap {
-          border-radius: inherit;
-          overflow: hidden;
-          height: 100%;
-          transform: translate(6px, -6px);
-          padding: 3px;
-          background: linear-gradient(
-            to bottom,
-            var(--blue-100) 0%,
-            var(--blue-400) 100%
-          );
-          position: relative;
-          transition: all 0.3s ease;
-        }
-
-        .outline {
-          position: absolute;
-          overflow: hidden;
-          inset: 0;
-          opacity: 0;
-          outline: none;
-          border-radius: inherit;
-          transition: all 0.4s ease;
-        }
-        .outline::before {
-          content: "";
-          position: absolute;
-          inset: 2px;
-          width: 120px;
-          height: 300px;
-          margin: auto;
-          background: linear-gradient(
-            to right,
-            transparent 0%,
-            white 50%,
-            transparent 100%
-          );
-          animation: spin 3s linear infinite;
-          animation-play-state: paused;
-        }
-
-        .content {
-          pointer-events: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1;
-          position: relative;
-          height: 100%;
-          gap: 16px;
-          border-radius: calc(var(--radius) * 0.85);
-          font-weight: 600;
-          transition: all 0.3s ease;
-          background: linear-gradient(
-            to bottom,
-            var(--blue-300) 0%,
-            var(--blue-400) 100%
-          );
-          box-shadow:
-            inset -2px 12px 11px -5px var(--blue-200),
-            inset 1px -3px 11px 0px rgb(0 0 0 / 35%);
-        }
-        .content::before {
-          content: "";
-          inset: 0;
-          position: absolute;
-          z-index: 10;
-          width: 80%;
-          top: 45%;
-          bottom: 35%;
-          opacity: 0.7;
-          margin: auto;
-          background: linear-gradient(to bottom, transparent, var(--blue-400));
-          filter: brightness(1.3) blur(5px);
-        }
-
-        .char {
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .char span {
-          display: block;
-          color: transparent;
-          position: relative;
-        }
-        .char span:nth-child(5) {
-          margin-left: 0.5px;
-        }
-        .char.state-1 span:nth-child(5) {
-          margin-right: 0px;
-        }
-        .char.state-1 span {
-          animation: charAppear 1.2s ease backwards calc(var(--i) * 0.03s);
-        }
-        .char.state-1 span::before,
-        .char span::after {
-          content: attr(data-label);
-          position: absolute;
-          color: var(--white);
-          text-shadow: -1px 1px 2px var(--blue-500);
-          left: 0;
-        }
-        .char span::before {
-          opacity: 0;
-          transform: translateY(-100%);
-        }
-        .char.state-2 {
-          position: absolute;
-          left: 85px;
-        }
-        .char.state-2 span::after {
-          opacity: 1;
-        }
-
-        .icon {
-          animation: resetArrow 0.8s cubic-bezier(0.7, -0.5, 0.3, 1.2) forwards;
-          z-index: 10;
-        }
-        .icon div,
-        .icon div::before,
-        .icon div::after {
-          height: 3px;
-          border-radius: 1px;
-          background-color: var(--white);
-        }
-        .icon div::before,
-        .icon div::after {
-          content: "";
-          position: absolute;
-          right: 0;
-          transform-origin: center right;
-          width: 14px;
-          border-radius: 15px;
-          transition: all 0.3s ease;
-        }
-        .icon div {
-          position: relative;
-          width: 24px;
-          box-shadow: -2px 2px 5px var(--blue-400);
-          transform: scale(0.9);
-          background: linear-gradient(to bottom, var(--white), var(--blue-100));
-          animation: swingArrow 1s ease-in-out infinite;
-          animation-play-state: paused;
-        }
-        .icon div::before {
-          transform: rotate(44deg);
-          top: 1px;
-          box-shadow: 1px -2px 3px -1px var(--blue-400);
-          animation: rotateArrowLine 1s linear infinite;
-          animation-play-state: paused;
-        }
-        .icon div::after {
-          bottom: 1px;
-          transform: rotate(316deg);
-          box-shadow: -2px 2px 3px 0 var(--blue-400);
-          background: linear-gradient(200deg, var(--white), var(--blue-100));
-          animation: rotateArrowLine2 1s linear infinite;
-          animation-play-state: paused;
-        }
-
-        .path {
-          position: absolute;
-          z-index: 12;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          stroke-dasharray: 150 480;
-          stroke-dashoffset: 150;
-          pointer-events: none;
-        }
-
-        .splash {
-          position: absolute;
-          top: 0;
-          left: 0;
-          pointer-events: none;
-          stroke-dasharray: 60 60;
-          stroke-dashoffset: 60;
-          transform: translate(-17%, -31%);
-          stroke: var(--blue-300);
-        }
-
-        .styled-button:hover .char.state-1 span::before {
-          animation: charAppear 0.7s ease calc(var(--i) * 0.03s);
-        }
-
-        .styled-button:hover .char.state-1 span::after {
-          opacity: 1;
-          animation: charDisappear 0.7s ease calc(var(--i) * 0.03s);
-        }
-
-        .styled-button:hover .wrap {
-          transform: translate(8px, -8px);
-        }
-
-        .styled-button:hover .outline {
-          opacity: 1;
-        }
-
-        .styled-button:hover .outline::before,
-        .styled-button:hover .icon div::before,
-        .styled-button:hover .icon div::after,
-        .styled-button:hover .icon div {
-          animation-play-state: running;
-        }
-
-        .styled-button:active .bg::before {
-          filter: blur(5px);
-          opacity: 0.7;
-          box-shadow:
-            -7px 6px 0 0 rgb(75 130 155 / 40%),
-            -14px 12px 0 0 rgb(75 130 155 / 25%),
-            -21px 18px 4px 0 rgb(75 130 155 / 15%);
-        }
-        .styled-button:active .content {
-          box-shadow:
-            inset -1px 12px 8px -5px rgba(0, 71, 137, 0.4),
-            inset 0px -3px 8px 0px var(--blue-200);
-        }
-
-        .styled-button:active .outline {
-          opacity: 0;
-        }
-
-        .styled-button:active .wrap {
-          transform: translate(3px, -3px);
-        }
-
-        .styled-button:active .splash {
-          animation: splash 0.8s cubic-bezier(0.3, 0, 0, 1) forwards 0.05s;
-        }
-
-        .styled-button:focus .path {
-          animation: path 1.6s ease forwards 0.2s;
-        }
-
-        .styled-button:focus .icon {
-          animation: arrow 1s cubic-bezier(0.7, -0.5, 0.3, 1.5) forwards;
-        }
-
-        .char.state-2 span::after,
-        .styled-button:focus .char.state-1 span {
-          animation: charDisappear 0.5s ease forwards calc(var(--i) * 0.03s);
-        }
-
-        .styled-button:focus .char.state-2 span::after {
-          animation: charAppear 1s ease backwards calc(var(--i) * 0.03s);
-        }
-
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-
-        @keyframes charAppear {
-          0% {
-            transform: translateY(50%);
-            opacity: 0;
-            filter: blur(20px);
-          }
-          20% {
-            transform: translateY(70%);
-            opacity: 1;
-          }
-          50% {
-            transform: translateY(-15%);
-            opacity: 1;
-            filter: blur(0);
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes charDisappear {
-          0% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-70%);
-            opacity: 0;
-            filter: blur(3px);
-          }
-        }
-
-        @keyframes arrow {
-          0% {
-            opacity: 1;
-          }
-          50% {
-            transform: translateX(60px);
-            opacity: 0;
-          }
-          51% {
-            transform: translateX(-200px);
-            opacity: 0;
-          }
-          100% {
-            transform: translateX(-128px);
-            opacity: 1;
-          }
-        }
-
-        @keyframes swingArrow {
-          50% {
-            transform: translateX(5px) scale(0.9);
-          }
-        }
-
-        @keyframes rotateArrowLine {
-          50% {
-            transform: rotate(30deg);
-          }
-          80% {
-            transform: rotate(55deg);
-          }
-        }
-
-        @keyframes rotateArrowLine2 {
-          50% {
-            transform: rotate(330deg);
-          }
-          80% {
-            transform: rotate(300deg);
-          }
-        }
-
-        @keyframes resetArrow {
-          0% {
-            transform: translateX(-128px);
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes path {
-          from {
-            stroke: white;
-          }
-          to {
-            stroke-dashoffset: -480;
-            stroke: #c6e7f9;
-          }
-        }
-
-        @keyframes splash {
-          to {
-            stroke-dasharray: 2 60;
-            stroke-dashoffset: -60;
-          }
-        }
-      `}</style>
-      <motion.div 
-        style={{ backgroundImage }}
-        className="min-h-screen w-full relative overflow-hidden bg-gray-950"
-      >
-        {/* Étoiles animées */}
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
+      {/* Fond avec étoiles animées */}
         <div className="absolute inset-0 z-0">
-          <div className="stars-container">
             {Array.from({ length: 100 }).map((_, i) => (
               <motion.div
                 key={i}
-                className="star"
+            className="absolute w-1 h-1 bg-white rounded-full"
                 style={{
-                  position: 'absolute',
-                  width: Math.random() * 3 + 1 + 'px',
-                  height: Math.random() * 3 + 1 + 'px',
-                  backgroundColor: 'white',
-                  borderRadius: '50%',
                   left: Math.random() * 100 + '%',
                   top: Math.random() * 100 + '%',
                 }}
@@ -475,109 +61,68 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
                 }}
               />
             ))}
-          </div>
         </div>
 
-      {/* Content */}
-      <div className="relative z-10 min-h-screen grid place-content-center px-4 py-24">
-        <div className="relative z-10 flex flex-col items-center">
-          
-          {/* Badge Version MVP */}
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }}
+      {/* Contenu principal centré verticalement et horizontalement */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-8 w-full max-w-4xl mx-auto">
+        
+        {/* Badge de bienvenue - en haut */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-1.5 inline-block rounded-full bg-gray-600/50 px-3 py-1.5 text-sm text-gray-200"
-          >
-            Version MVP
-          </motion.span>
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-white/90 to-gray-100/90 border border-gray-300/30 shadow-lg shadow-gray-500/20 mb-8"
+        >
+          <div className="flex items-center justify-center w-4 h-4">
+            <svg className="w-3 h-3 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          </div>
+          <span className="text-sm font-medium text-gray-800">
+            Votre espace d'accompagnement privé
+          </span>
+        </motion.div>
 
-          {/* Welcome Text with Custom Animation */}
-          <div className="text-center mb-6">
-            {/* Première ligne - "Bienvenue !" */}
+        {/* Titre principal - centre */}
             <motion.h1
-              initial={{ 
-                opacity: 0, 
-                y: 50, 
-                scale: 0.8,
-                rotateX: -20
-              }}
-              animate={{ 
-                opacity: 1, 
-                y: 0, 
-                scale: 1,
-                rotateX: 0
-              }}
-              transition={{ 
-                duration: 1.2, 
-                delay: 0.4,
-                type: "spring",
-                stiffness: 100,
-                damping: 15
-              }}
-              className="bg-gradient-to-br from-white to-gray-400 bg-clip-text text-4xl font-medium leading-tight text-transparent sm:text-6xl md:text-8xl mb-2"
-              style={{ perspective: "1000px" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+          className="text-5xl sm:text-7xl md:text-8xl font-bold mb-8 tracking-tighter"
+        >
+          {words.map((word, wordIndex) => (
+            <span
+              key={wordIndex}
+              className="inline-block mr-4 last:mr-0"
             >
-              {"Bienvenue !".split("").map((char, index) => (
+              {word.split("").map((letter, letterIndex) => (
                 <motion.span
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  key={`${wordIndex}-${letterIndex}`}
+                  initial={{ y: 100, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
                   transition={{
-                    duration: 0.5,
-                    delay: 0.6 + index * 0.05,
-                    ease: "easeOut"
+                    delay: wordIndex * 0.15 + letterIndex * 0.04,
+                    type: "spring",
+                    stiffness: 150,
+                    damping: 25,
                   }}
-                  className={char === " " ? "inline" : "inline-block"}
+                  className="inline-block text-transparent bg-clip-text 
+                    bg-gradient-to-r from-white to-gray-300"
                 >
-                  {char}
+                  {letter}
                 </motion.span>
+              ))}
+            </span>
               ))}
             </motion.h1>
 
-            {/* Deuxième ligne - "dans ta house" */}
-            <motion.h2
-              initial={{ 
-                opacity: 0, 
-                y: 30
-              }}
-              animate={{ 
-                opacity: 1, 
-                y: 0
-              }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 1.2,
-                ease: "easeOut"
-              }}
-              className="bg-gradient-to-br from-white to-gray-400 bg-clip-text text-3xl font-medium leading-tight text-transparent sm:text-5xl md:text-7xl"
-            >
-              {"dans ta house".split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 1.4 + index * 0.03,
-                    ease: "easeOut"
-                  }}
-                  className={char === " " ? "inline" : "inline-block"}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </motion.h2>
-          </div>
 
-
-
-          {/* Styled Button */}
+        {/* Bouton magnifique - centre */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 200 }}
-            className="relative mt-10"
+          transition={{ duration: 0.6, delay: 1.8, type: "spring", stiffness: 200 }}
+          className="relative"
           >
             <button className="styled-button" onClick={handleDashboardClick}>
               <div className="bg"></div>
@@ -706,10 +251,18 @@ export function OnboardingPage({ onContinue }: OnboardingPageProps) {
               </div>
             </button>
           </motion.div>
-
-        </div>
       </div>
+
+      {/* Signature en bas à droite - position absolue */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 2.2 }}
+        className="absolute bottom-4 right-4 z-20"
+      >
+        <p className="text-xs text-gray-400 opacity-60">By MorganRize</p>
       </motion.div>
-    </>
+
+    </div>
   );
 }

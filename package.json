@@ -1,5 +1,5 @@
 {
-  "name": "rest-express",
+  "name": "rizeapphub",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
@@ -50,6 +50,9 @@
     "@react-three/fiber": "^9.3.0",
     "@supabase/supabase-js": "^2.74.0",
     "@tanstack/react-query": "^5.60.5",
+    "@tsparticles/engine": "^3.9.1",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
     "@types/three": "^0.180.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

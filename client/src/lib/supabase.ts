@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Configuration Supabase - Nouveau projet
-const supabaseUrl = 'https://kwzurhhbvfkrvhbcdhwi.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3enVyaGhidmZrcnZoYmNkaHdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk3ODU0OTAsImV4cCI6MjA3NTM2MTQ5MH0.UmcUdRYx9IawGI93Ylqe40LyjAeYHDhrYKLwL0yAifQ'
+// Configuration Supabase - RizeAppHub™
+const supabaseUrl = 'https://dewpygnammmyvhporthh.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRld3B5Z25hbW1teXZocG9ydGhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MjA4NjksImV4cCI6MjA3MjQ5Njg2OX0.JQ0ugaiP3CMI0O2otvaacq1UG8Bil0J0Djbegbb22Gg'
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
@@ -15,9 +15,9 @@ const ADMIN_CODES = {
     permissions: ['read', 'write', 'delete']
   },
   'smartapp2024': { 
-    name: 'SmartApp 2024', 
+    name: 'RizeAppHub 2024', 
     level: 'admin', 
-    description: 'Accès SmartApp Academy 2024',
+    description: 'Accès RizeAppHub™ 2024',
     permissions: ['read', 'write']
   },
   'academy2024': { 
@@ -389,7 +389,7 @@ export const deleteCalendarEvent = async (eventId: string): Promise<boolean> => 
 // ===== FONCTIONS CAL.COM =====
 
 // Configuration Cal.com
-const CAL_COM_USERNAME = 'smartapp-academy' // Remplacez par votre nom d'utilisateur Cal.com
+const CAL_COM_USERNAME = 'smartappacademy' // Remplacez par votre nom d'utilisateur Cal.com
 
 // Interface pour les événements Cal.com
 export interface CalComEvent {

@@ -11,6 +11,8 @@ import { Integrations } from "@/components/Integrations";
 import { NewDashboardApp } from "@/components/NewDashboardApp";
 import { OnboardingPage } from "@/components/OnboardingPage";
 import { AdminDashboard } from "@/components/AdminDashboard";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { signOutUser } from "@/lib/supabase";
 
 function App() {
   const navigate = useNavigate();
@@ -29,8 +31,17 @@ function App() {
     navigate('/dashboard');
   };
 
-  const handleLogout = () => {
-    navigate('/landingpage');
+  const handleLogout = async () => {
+    try {
+      // Déconnexion Supabase
+      await signOutUser();
+      console.log('Déconnexion réussie');
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+    } finally {
+      // Redirection vers la page d'accueil
+      navigate('/');
+    }
   };
 
   return (
@@ -40,8 +51,22 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
             <Route path="/landingpage" element={<LandingPage onLogin={handleLogin} />} />
-            <Route path="/onboarding" element={<OnboardingPage onContinue={handleOnboardingComplete} />} />
-            <Route path="/dashboard" element={<NewDashboardApp onLogout={handleLogout} />} />
+            <Route 
+              path="/onboarding" 
+              element={
+                <ProtectedRoute>
+                  <OnboardingPage onContinue={handleOnboardingComplete} />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <NewDashboardApp onLogout={handleLogout} />
+                </ProtectedRoute>
+              } 
+            />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>

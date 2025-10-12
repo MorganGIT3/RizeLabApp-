@@ -31,10 +31,10 @@ export function LandingPage({ onLogin }: LandingPageProps) {
       {/* Logo seulement en haut à gauche */}
       <div className="absolute top-0 left-0 z-10 p-6">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50">
-            <Zap className="h-4 w-4 text-white" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-lg shadow-gray-500/30">
+            <Zap className="h-4 w-4 text-black" />
           </div>
-          <span className="font-bold text-xl text-white">SmartApp Academy™</span>
+          <span className="font-bold text-xl text-white">RizeAppHub™</span>
         </div>
       </div>
 

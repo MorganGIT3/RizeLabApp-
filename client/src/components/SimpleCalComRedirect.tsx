@@ -24,12 +24,6 @@ export function SimpleCalComRedirect() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       
-      {/* Message appels restants en haut à droite */}
-      <div className="absolute top-6 right-6 z-20">
-        <div className="bg-gradient-to-r from-gray-800 to-black text-white px-4 py-2 rounded-lg shadow-lg">
-          <span className="font-semibold">📞 Il vous reste 2 appels</span>
-        </div>
-      </div>
 
       {/* Contenu principal */}
       <div className="relative z-10 flex items-center justify-center min-h-screen p-8">
@@ -126,7 +120,7 @@ export function SimpleCalComRedirect() {
             {/* Message important en rouge */}
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
               <p className="text-red-700 font-bold text-center">
-                ⚠️ TRÈS IMPORTANT : Réserver votre appel avec le même email que vous avez utilisé pour votre connexion sur votre app SmartApp Academy™
+                ⚠️ TRÈS IMPORTANT : Réserver votre appel avec le même email que vous avez utilisé pour votre connexion sur votre app RizeAppHub™
               </p>
             </div>
 

@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Target, Zap, Home, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FullScreenCalendar } from './FullScreenCalendar';
-import { CalComBookingPage } from './CalComBookingPage';
 import { SimpleCalComRedirect } from './SimpleCalComRedirect';
+import { IOSDock } from './IOSDock';
+import logoImage from '../ChatGPT Image 10 oct. 2025, 21_52_06.png';
 
 interface NewDashboardAppProps {
   onLogout?: () => void;
@@ -15,16 +15,27 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
   const [currentView, setCurrentView] = useState('/dashboard');
 
   const handleLogout = () => {
+    console.log('Logout button clicked!');
     onLogout?.();
     navigate('/');
   };
+
+  // Handlers pour la barre iOS
+  const handleHomeClick = () => {
+    setCurrentView('/dashboard');
+  };
+
+  const handleCallClick = () => {
+    setCurrentView('/book-call');
+  };
+
 
   const renderContent = () => {
     switch (currentView) {
           case '/dashboard':
     return (
               <motion.div 
-                className="min-h-screen flex items-center justify-center"
+                className="min-h-screen flex items-center justify-center -mt-24"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -32,7 +43,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
         <div className="text-center max-w-4xl mx-auto px-8">
                   {/* Titre principal avec animation simple */}
                   <motion.h1 
-                    className="text-6xl md:text-8xl font-bold text-white mb-8 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent"
+                    className="text-6xl md:text-8xl font-bold text-white mb-8 bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
@@ -47,7 +58,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
-                    Bienvenue dans votre espace SmartApp Academy™
+                    Bienvenue dans votre espace RizeAppHub™
                   </motion.p>
                   
                   {/* Card de fonctionnalité avec animation simple */}
@@ -58,7 +69,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     transition={{ duration: 0.6, delay: 0.6 }}
                   >
                     <motion.div 
-                      className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-200 max-w-md"
+                      className="bg-gradient-to-br from-white/20 to-gray-200/20 border border-gray-300/30 rounded-2xl p-8 hover:border-gray-300/50 transition-all duration-200 max-w-md"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -69,11 +80,11 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                         transition={{ duration: 0.4, delay: 0.8 }}
                       >
                         <motion.div 
-                          className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center"
+                          className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center"
                           whileHover={{ rotate: 5 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <Calendar className="w-6 h-6 text-blue-400" />
+                          <Calendar className="w-6 h-6 text-gray-400" />
                         </motion.div>
                         <h3 className="text-xl font-bold text-white">Booker un Call</h3>
                       </motion.div>
@@ -106,21 +117,22 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
 
           case '/book-call':
             return (
-              <div className="min-h-screen">
+              <div className="min-h-screen -mt-24">
                 <SimpleCalComRedirect />
               </div>
             );
+
 
 
       default:
         return (
           <div className="min-h-screen flex items-center justify-center">
             <div className="text-center max-w-4xl mx-auto px-8">
-              <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+              <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent">
                 Dashboard
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 mb-12">
-                Bienvenue dans votre espace SmartApp Academy™
+                Bienvenue dans votre espace RizeAppHub™
               </p>
         </div>
       </div>
@@ -131,85 +143,98 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
   // Dashboard simplifié - pas besoin de variables complexes
 
   return (
-    <div className="min-h-screen w-full bg-black relative flex" style={{ border: 'none !important' }}>
-      {/* Background harmonisé avec la sidebar */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-900 via-blue-800 to-black z-0"></div>
+    <div className="min-h-screen w-full bg-black relative" style={{ border: 'none !important' }}>
+      {/* Background harmonisé */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-black z-0"></div>
       
-
-          {/* Sidebar fixe */}
-          <div className="w-64 bg-gradient-to-b from-blue-900 to-black fixed left-0 top-0 h-full overflow-hidden z-10">
-
-        {/* Logo Header */}
-        <div className="relative z-10 p-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/50">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-white">SmartApp</h1>
-              <p className="text-sm text-blue-300">Academy™</p>
-            </div>
+      {/* Header avec logo et logout */}
+      <header 
+        className="relative z-50 p-6 flex justify-between items-center"
+        style={{ 
+          position: 'relative',
+          zIndex: 9999,
+          pointerEvents: 'auto'
+        }}
+      >
+        <div className="flex items-center space-x-3">
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center shadow-lg shadow-gray-500/30 overflow-hidden">
+            <img 
+              src={logoImage} 
+              alt="RizeApp Logo" 
+              className="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white">RizeAppHub™</h1>
+            <p className="text-sm text-gray-300">Dashboard</p>
           </div>
         </div>
-
-        {/* Navigation Items */}
-        <nav className="relative z-10 p-4 space-y-2">
-          {/* Dashboard */}
-          <div 
-            className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
-              currentView === '/dashboard' 
-                ? 'bg-blue-500/20 text-blue-300' 
-                : 'text-gray-300 hover:bg-gray-700/20 hover:text-white'
-            }`}
-            onClick={() => setCurrentView('/dashboard')}
+        
+        {/* Bouton Logout - Position absolue pour éviter les conflits */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: '24px',
+            right: '24px',
+            zIndex: 10000,
+            pointerEvents: 'auto'
+          }}
+        >
+          <button 
+            onClick={() => {
+              handleLogout();
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 20px',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              border: '2px solid #ef4444',
+              borderRadius: '12px',
+              color: '#ef4444',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              pointerEvents: 'auto',
+              boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
-            <Home className="w-5 h-5" />
-            <span className="font-medium">Dashboard</span>
-            {currentView === '/dashboard' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
-          </div>
-
-          {/* Book un Call */}
-          <div 
-            className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
-              currentView === '/book-call' 
-                ? 'bg-blue-500/20 text-blue-300' 
-                : 'text-gray-300 hover:bg-gray-700/20 hover:text-white'
-            }`}
-            onClick={() => setCurrentView('/book-call')}
-          >
-            <Target className="w-5 h-5" />
-            <span className="font-medium">Book un Call</span>
-            {currentView === '/book-call' && <div className="w-2 h-2 bg-blue-400 rounded-full ml-auto"></div>}
-          </div>
-
-          
-          {/* Logout */}
-          <div 
-            className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 cursor-pointer transition-all duration-200 mt-8"
-            onClick={onLogout}
-          >
-            <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
-          </div>
-        </nav>
-      </div>
+            <LogOut style={{ width: '24px', height: '24px' }} />
+            <span>Déconnexion</span>
+          </button>
+        </div>
+      </header>
 
       {/* Main Content */}
-          <main className="flex-1 relative z-20 ml-64" style={{ border: 'none !important' }}>
-        <div className="p-8" style={{ border: 'none !important' }}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              style={{ border: 'none !important' }}
-            >
-              {renderContent()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      <main className="relative z-20 pb-24">
+        <AnimatePresence mode="wait">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ border: 'none !important' }}
+          >
+            {renderContent()}
+          </motion.div>
+        </AnimatePresence>
       </main>
+
+      {/* Barre iOS en bas */}
+      <IOSDock 
+        onHomeClick={handleHomeClick}
+        onCallClick={handleCallClick}
+        currentView={currentView}
+      />
 
     </div>
   );

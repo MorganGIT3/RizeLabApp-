@@ -90,10 +90,10 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
     <Sidebar className="bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-900 border-r border-neutral-800">
       <SidebarHeader className="p-4 border-b border-neutral-800">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-t from-blue-500 to-blue-600">
+          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-t from-white to-gray-100">
             <Zap className="h-4 w-4 text-white" />
           </div>
-          <span className="font-bold text-lg text-white">SmartApp Academy™</span>
+          <span className="font-bold text-lg text-white">RizeAppHub™</span>
         </div>
       </SidebarHeader>
       
@@ -156,7 +156,7 @@ export function AppSidebar({ onNavigate }: AppSidebarProps) {
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8">
             <AvatarImage src="" alt="User" />
-            <AvatarFallback className="bg-gradient-to-t from-blue-500 to-blue-600 text-white">JD</AvatarFallback>
+            <AvatarFallback className="bg-gradient-to-t from-white to-gray-100 text-white">JD</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate text-white">John Doe</p>

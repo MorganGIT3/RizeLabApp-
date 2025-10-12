@@ -81,11 +81,11 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
       {/* Header */}
       <div className="p-6 border-b border-neutral-700">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-blue-400 to-blue-600">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r from-white to-gray-200">
             <Zap className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-xl text-white">SmartApp Academy™</h1>
+            <h1 className="font-bold text-xl text-white">RizeAppHub™</h1>
             <p className="text-xs text-gray-400">Dashboard</p>
           </div>
         </div>
@@ -118,7 +118,7 @@ export function NewSidebar({ currentView, onNavigate, onLogout }: NewSidebarProp
                   {/* Active indicator */}
                   {isActive && (
                     <motion.div
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 to-blue-600 rounded-r-full"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-white to-gray-200 rounded-r-full"
                       layoutId="activeIndicator"
                       initial={{ scaleY: 0 }}
                       animate={{ scaleY: 1 }}

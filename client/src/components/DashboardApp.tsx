@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Dashboard } from './Dashboard';
 import { AIChatbot } from './AIChatbot';
-import { DockTheme } from './DockTheme';
+import { IOSBar } from './IOSBar';
 import { Button } from '@/components/ui/button';
 import { LogOut, Calendar } from 'lucide-react';
 
@@ -11,6 +11,10 @@ interface DashboardAppProps {
 
 export function DashboardApp({ onLogout }: DashboardAppProps) {
   const [currentView, setCurrentView] = useState('/dashboard');
+
+  const handleLogout = () => {
+    onLogout?.();
+  };
 
   const renderContent = () => {
     switch (currentView) {
@@ -561,16 +565,6 @@ export function DashboardApp({ onLogout }: DashboardAppProps) {
             </h2>
           </div>
           <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={onLogout}
-              data-testid="button-logout"
-              className="text-white hover:bg-white/10"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Déconnexion
-            </Button>
           </div>
         </header>
 
@@ -579,8 +573,8 @@ export function DashboardApp({ onLogout }: DashboardAppProps) {
           {renderContent()}
         </main>
 
-        {/* iOS Dock */}
-        <DockTheme onNavigate={setCurrentView} />
+        {/* iOS Bar */}
+        <IOSBar onNavigate={setCurrentView} currentView={currentView} />
       </div>
     </div>
   );
