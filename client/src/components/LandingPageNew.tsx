@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import React, { ReactNode } from "react";
-import { useDramaticSound } from "@/hooks/useDramaticSound";
 import { motion } from "framer-motion";
 import { BackgroundPaths } from "./BackgroundPaths";
 
@@ -38,7 +37,6 @@ interface LandingPageNewProps {
 }
 
 export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProps) {
-  const { playDramaticSound } = useDramaticSound();
   
   const title = "Connecte toi à RizeAppHub™";
   const words = title.split(" ");
@@ -116,7 +114,7 @@ export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProp
               >
                 <div className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10 dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <button
-                    onClick={() => { playDramaticSound(); onSignup?.(); }}
+                    onClick={() => { onSignup?.(); }}
                     className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md 
                       bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 
                       text-black dark:text-white transition-all duration-300 
@@ -134,7 +132,7 @@ export default function LandingPageNew({ onLogin, onSignup }: LandingPageNewProp
 
                 <div className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10 dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <button
-                    onClick={() => { playDramaticSound(); onLogin?.(); }}
+                    onClick={() => { onLogin?.(); }}
                     className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md 
                       bg-transparent hover:bg-white/50 dark:hover:bg-black/50 
                       text-black dark:text-white transition-all duration-300 

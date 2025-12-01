@@ -100,23 +100,31 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
         return;
       }
 
-      if (data.user) {
-        console.log('Inscription réussie:', data.user);
-        
-        // Vérifier si l'email doit être confirmé
-        if (data.user.email_confirmed_at) {
-          // Email confirmé, connexion automatique
-          onAuthSuccess?.();
-          onOpenChange(false);
-        } else {
-          // Email non confirmé, afficher message
-          setError("Un email de confirmation a été envoyé. Vérifiez votre boîte de réception.");
-          // Attendre un peu puis fermer le modal
+      if (data?.user) {
+        // Si une session existe, l'utilisateur est déjà connecté
+        if (data.session) {
+          setSuccess("Compte créé avec succès !");
           setTimeout(() => {
             onAuthSuccess?.();
             onOpenChange(false);
-          }, 3000);
+          }, 1000);
+        } else if (data.user.email_confirmed_at) {
+          // Email déjà confirmé
+          setSuccess("Compte créé avec succès !");
+          setTimeout(() => {
+            onAuthSuccess?.();
+            onOpenChange(false);
+          }, 1000);
+        } else {
+          // Email nécessite confirmation mais on permet quand même l'accès
+          setSuccess("Compte créé avec succès ! Vous pouvez vous connecter.");
+          setTimeout(() => {
+            onAuthSuccess?.();
+            onOpenChange(false);
+          }, 2000);
         }
+      } else {
+        setError("Erreur : aucun utilisateur créé");
       }
     } catch (error) {
       console.error('Erreur d\'inscription:', error);

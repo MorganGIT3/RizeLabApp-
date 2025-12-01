@@ -156,34 +156,34 @@ export const logoutAdmin = () => {
 // Fonction pour créer un utilisateur
 export const signUpUser = async (email: string, password: string, fullName?: string) => {
   try {
-    console.log('Tentative d\'inscription pour:', email)
-    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           full_name: fullName || ''
-        }
+        },
+        emailRedirectTo: `${window.location.origin}`
       }
     })
     
-    console.log('Réponse Supabase Auth:', { data, error })
-    
     if (error) {
-      console.error('Erreur Supabase Auth:', error)
       return { data, error }
     }
     
+    // Si l'utilisateur est créé, se connecter automatiquement si l'email n'a pas besoin de confirmation
+    if (data.user && data.session) {
+      return { data, error: null }
+    }
+    
+    // Si l'email nécessite une confirmation, retourner quand même le succès
     if (data.user) {
-      console.log('Utilisateur créé avec succès:', data.user.id)
-      console.log('Le profil utilisateur et les paramètres seront créés automatiquement par le trigger PostgreSQL')
+      return { data, error: null }
     }
     
     return { data, error }
-  } catch (error) {
-    console.error('Erreur lors de l\'inscription:', error)
-    return { data: null, error }
+  } catch (error: any) {
+    return { data: null, error: error || new Error('Erreur lors de l\'inscription') }
   }
 }
 

@@ -1,17 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  root: path.resolve(__dirname, 'client'),
   plugins: [react()],
   resolve: {
     alias: {
-      '/src': '/client/src',
-      '@': '/client/src'
+      '@': path.resolve(__dirname, 'client/src'),
+      '@shared': path.resolve(__dirname, 'shared')
     }
   },
   build: {
-    outDir: 'dist',
+    outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {
       output: {
@@ -26,11 +31,14 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000
   },
   server: {
-    port: 5000,
+    port: 3000,
+    host: true,
+    strictPort: true
   },
   base: '/',
   preview: {
-    port: 5000,
-    host: true
+    port: 3000,
+    host: true,
+    strictPort: true
   }
 })

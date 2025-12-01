@@ -2,54 +2,65 @@ import { useCallback } from 'react';
 
 export const useAuthSound = () => {
   const playAuthSound = useCallback(() => {
-    // Créer un contexte audio
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    
-    // Créer un oscillateur pour le son principal
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // Connecter les nœuds
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // Configuration du son - version modifiée du son dramatique
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(330, audioContext.currentTime); // Note E4
-    oscillator.frequency.exponentialRampToValueAtTime(660, audioContext.currentTime + 0.4); // Monte vers E5
-    
-    // Envelope pour l'amplitude - crescendo puis decrescendo
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.25, audioContext.currentTime + 0.3);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.2);
-    
-    // Ajouter une réverbération simple
-    const convolver = audioContext.createConvolver();
-    const reverbBuffer = audioContext.createBuffer(2, audioContext.sampleRate * 1.5, audioContext.sampleRate);
-    
-    // Créer une impulsion pour la réverbération
-    for (let channel = 0; channel < 2; channel++) {
-      const channelData = reverbBuffer.getChannelData(channel);
-      for (let i = 0; i < channelData.length; i++) {
-        channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / channelData.length, 1.5);
-      }
+    try {
+      const AudioCtx = (window as any).AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+
+      const ctx = new AudioCtx();
+      const now = ctx.currentTime;
+
+      // Créer un filtre passe-bas pour un son plus doux
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = "lowpass";
+      lowpass.frequency.setValueAtTime(3000, now);
+      lowpass.Q.setValueAtTime(1, now);
+
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0, now);
+      master.gain.linearRampToValueAtTime(0.25, now + 0.05);
+      master.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+      
+      master.connect(lowpass);
+      lowpass.connect(ctx.destination);
+
+      const playTone = (freq: number, start: number, duration: number, detune = 0) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, now + start);
+        osc.detune.setValueAtTime(detune, now + start);
+
+        // Envelope très douce pour un son apaisant
+        gain.gain.setValueAtTime(0, now + start);
+        gain.gain.linearRampToValueAtTime(0.6, now + start + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + start + duration);
+
+        osc.connect(gain);
+        gain.connect(master);
+
+        osc.start(now + start);
+        osc.stop(now + start + duration);
+      };
+
+      // Mélodie harmonieuse et agréable en accord majeur (Do-Mi-Sol-Do)
+      // Son de connexion réussie - doux et accueillant
+      playTone(523.25, 0.0, 1.0, 0);     // C5 - Do
+      playTone(659.25, 0.15, 0.9, 0);    // E5 - Mi
+      playTone(783.99, 0.3, 0.8, 0);     // G5 - Sol
+      playTone(1046.50, 0.45, 0.7, 0);   // C6 - Do (octave)
+
+      // Fermer le contexte après la fin
+      setTimeout(() => {
+        try { 
+          ctx.close(); 
+        } catch (e) {
+          // Ignorer les erreurs de fermeture
+        }
+      }, 2500);
+    } catch (error) {
+      console.log("Audio not available:", error);
     }
-    
-    convolver.buffer = reverbBuffer;
-    
-    // Connecter avec réverbération
-    oscillator.disconnect();
-    oscillator.connect(convolver);
-    convolver.connect(gainNode);
-    
-    // Démarrer le son
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 1.2);
-    
-    // Nettoyer après la fin
-    setTimeout(() => {
-      audioContext.close();
-    }, 2000);
   }, []);
 
   return { playAuthSound };
