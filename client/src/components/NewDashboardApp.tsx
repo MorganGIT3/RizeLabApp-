@@ -132,10 +132,10 @@ const FrameworkAppBackground = () => (
 // Composants d'animation au hover pour chaque carte
 const CallBookingHoverAnimation = () => (
   <div className="absolute inset-0 p-4 pointer-events-none">
-    <motion.div
+              <motion.div 
       className="absolute inset-0 flex flex-col gap-2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
       {/* Éléments de calendrier animés */}
@@ -243,7 +243,7 @@ const FormationHoverAnimation = () => (
       
       {/* Points de progression */}
       {[1, 2, 3, 4].map((i) => (
-        <motion.div
+                  <motion.div 
           key={`progress-${i}`}
           className="absolute w-1.5 h-1.5 bg-white/40 rounded-full"
           style={{
@@ -275,7 +275,7 @@ const RessourcesGraphiquesHoverAnimation = () => (
     >
       {/* Designs de landing pages animés */}
       {[1, 2, 3].map((i) => (
-        <motion.div
+                    <motion.div 
           key={i}
           className="absolute bg-white/8 rounded-lg border border-white/15 backdrop-blur-sm overflow-hidden"
           style={{
@@ -314,7 +314,7 @@ const RessourcesGraphiquesHoverAnimation = () => (
       
       {/* Éléments graphiques flottants */}
       {[1, 2, 3, 4, 5].map((i) => (
-        <motion.div
+                      <motion.div 
           key={`graphic-${i}`}
           className="absolute"
           style={{
@@ -352,7 +352,7 @@ const ApplicationExempleHoverAnimation = () => (
     >
       {/* Snippets de code animés */}
       {[1, 2, 3].map((i) => (
-        <motion.div
+                        <motion.div 
           key={i}
           className="absolute bg-white/5 rounded border border-white/10 backdrop-blur-sm p-2"
           style={{
@@ -391,10 +391,10 @@ const ApplicationExempleHoverAnimation = () => (
                   {line === 4 && <div className="h-1 bg-white/20 rounded w-5/6"></div>}
                   {line === 5 && <div className="h-1 bg-white/25 rounded w-1/2"></div>}
                 </div>
-              </motion.div>
+                        </motion.div>
             ))}
           </div>
-        </motion.div>
+                      </motion.div>
       ))}
       
       {/* Curseur clignotant */}
@@ -420,8 +420,8 @@ const FrameworkAppHoverAnimation = () => (
   <div className="absolute inset-0 p-4 pointer-events-none overflow-hidden">
     <motion.div
       className="absolute inset-0"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
       {/* Composants de framework animés */}
@@ -511,80 +511,9 @@ const FrameworkAppHoverAnimation = () => (
 // Composant pour la carte Formation avec visuel Notion
 const FormationNotionCard = () => {
   const notionUrl = "https://tarry-parrotfish-a73.notion.site/RizeApp-Academy-Cr-e-lance-et-vends-ton-application-IA-no-code-des-entreprises-281c766a5d1181bfac04e3b924367e18?source=copy_link";
-  const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
   
   const handleClick = () => {
     window.open(notionUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  // Créer un placeholder visuel détaillé pour Notion
-  const createNotionPreview = () => {
-    return (
-      <div className="w-full h-full bg-gradient-to-br from-[#2e2e2e] via-[#1a1a1a] to-[#0f0f0f] flex flex-col">
-        {/* Header Notion avec les 4 points colorés */}
-        <div className="h-14 bg-[#2e2e2e] border-b border-white/10 flex items-center px-4 gap-3">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#F59E0B] shadow-[0_0_8px_rgba(245,158,11,0.5)]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-            <div className="w-3 h-3 rounded-full bg-[#3B82F6] shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-          </div>
-          <div className="flex-1 h-8 bg-white/5 rounded px-4 flex items-center border border-white/10">
-            <span className="text-white/70 text-sm font-medium">RizeApp Academy</span>
-          </div>
-        </div>
-        
-        {/* Contenu principal avec style Notion */}
-        <div className="flex-1 p-8 space-y-6 overflow-y-auto">
-          {/* Titre principal */}
-          <div className="space-y-3">
-            <div className="h-10 bg-white/12 rounded w-4/5 border border-white/10"></div>
-            <div className="h-6 bg-white/8 rounded w-2/3"></div>
-            <div className="h-4 bg-white/6 rounded w-1/2"></div>
-          </div>
-          
-          {/* Section avec texte */}
-          <div className="space-y-4 mt-8">
-            <div className="h-5 bg-white/10 rounded w-full"></div>
-            <div className="h-5 bg-white/10 rounded w-[95%]"></div>
-            <div className="h-5 bg-white/10 rounded w-[90%]"></div>
-            <div className="h-5 bg-white/8 rounded w-full"></div>
-            <div className="h-5 bg-white/8 rounded w-[85%]"></div>
-          </div>
-          
-          {/* Section avec cards Notion */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-28 bg-white/8 rounded-lg border border-white/10 flex items-center justify-center p-4">
-                <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-white/40" />
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Section avec liste */}
-          <div className="space-y-3 mt-8">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-white/30 mt-1 flex-shrink-0"></div>
-                <div className="h-4 bg-white/10 rounded flex-1"></div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Section avec colonnes */}
-          <div className="grid grid-cols-3 gap-4 mt-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="space-y-2">
-                <div className="h-3 bg-white/10 rounded w-full"></div>
-                <div className="h-3 bg-white/8 rounded w-4/5"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -592,7 +521,7 @@ const FormationNotionCard = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-5xl mx-auto"
+      className="max-w-6xl mx-auto relative z-50"
     >
       <motion.div
         className="group relative cursor-pointer"
@@ -630,7 +559,7 @@ const FormationNotionCard = () => {
             background: 'radial-gradient(circle 280px at 0% 0%, rgba(68, 68, 68, 0.4), rgba(12, 13, 13, 1))',
             border: '1px solid rgba(255, 255, 255, 0.15)',
             boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.8)',
-            minHeight: '600px'
+            minHeight: '700px'
           }}
         >
           {/* Grille de fond */}
@@ -646,7 +575,7 @@ const FormationNotionCard = () => {
           />
 
           {/* Header avec titre */}
-          <div className="relative z-20 p-6 border-b border-white/10">
+          <div className="relative z-20 p-6 border-b border-white/10 bg-gradient-to-b from-black/40 to-transparent">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
@@ -654,62 +583,99 @@ const FormationNotionCard = () => {
                 </div>
                 <div>
                   <h2 className="text-2xl font-extralight text-white">RizeApp Academy</h2>
-                  <p className="text-white/60 text-sm">Formation complète sur Notion</p>
+                  <p className="text-white/60 text-sm">Crée, lance et vends ton application IA no-code pour les entreprises</p>
                 </div>
               </div>
               <ExternalLink className="w-6 h-6 text-white/60 group-hover:text-white transition-colors" />
             </div>
           </div>
 
-          {/* Aperçu visuel du contenu Notion */}
-          <div 
-            className="relative h-[500px] overflow-hidden"
-            onMouseEnter={() => setShouldLoadIframe(true)}
-          >
-            {shouldLoadIframe ? (
-              <iframe
-                src={notionUrl}
-                className="w-full h-full border-0"
-                title="Aperçu RizeApp Academy"
-                style={{
-                  transform: 'scale(0.35)',
-                  transformOrigin: 'top left',
-                  width: '285.7%',
-                  height: '285.7%',
-                }}
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                loading="lazy"
-              />
-            ) : (
-              createNotionPreview()
-            )}
-            {/* Overlay pour améliorer la visibilité et indiquer que c'est cliquable */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
-            {!shouldLoadIframe && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="px-4 py-2 bg-black/60 backdrop-blur-sm rounded-lg border border-white/20">
-                  <span className="text-white/80 text-sm font-medium">Passer la souris pour voir l'aperçu</span>
+          {/* Aperçu visuel du contenu Notion - TOUJOURS VISIBLE */}
+          <div className="relative h-[600px] overflow-hidden bg-black">
+            {/* Aperçu Notion stylisé toujours visible */}
+            <div className="w-full h-full bg-gradient-to-br from-[#1a1a1a] via-[#0f0f0f] to-[#000000] flex flex-col">
+              {/* Header Notion avec les 4 points colorés caractéristiques */}
+              <div className="h-14 bg-[#2e2e2e] border-b border-white/10 flex items-center px-4 gap-3 flex-shrink-0">
+                <div className="flex gap-2">
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#EF4444] shadow-[0_0_10px_rgba(239,68,68,0.6)] animate-pulse"></div>
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#F59E0B] shadow-[0_0_10px_rgba(245,158,11,0.6)] animate-pulse" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#10B981] shadow-[0_0_10px_rgba(16,185,129,0.6)] animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#3B82F6] shadow-[0_0_10px_rgba(59,130,246,0.6)] animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+                </div>
+                <div className="flex-1 h-8 bg-white/8 rounded px-4 flex items-center border border-white/15 ml-4">
+                  <span className="text-white/80 text-sm font-medium">📚 RizeApp Academy</span>
                 </div>
               </div>
-            )}
-          </div>
-
-          {/* Footer avec CTA */}
-          <div className="relative z-20 p-6 border-t border-white/10 bg-gradient-to-t from-black/40 to-transparent">
-            <motion.div
-              className="flex items-center justify-center gap-3 px-6 py-3 bg-white/10 hover:bg-white/15 rounded-xl border border-white/20 backdrop-blur-sm transition-all duration-300"
-              whileHover={{ gap: 4 }}
-            >
-              <span className="text-white font-semibold">Accéder à la formation complète</span>
-              <ArrowRight className="w-5 h-5 text-white" />
-            </motion.div>
+              
+              {/* Contenu principal avec style Notion réaliste */}
+              <div className="flex-1 p-8 space-y-6 overflow-hidden">
+                {/* Titre principal de la formation */}
+                <div className="space-y-4 mt-4">
+                  <div className="h-12 bg-white/15 rounded-lg w-5/6 border border-white/15"></div>
+                  <div className="h-8 bg-white/10 rounded w-3/5"></div>
+                  <div className="h-6 bg-white/8 rounded w-2/5"></div>
+                </div>
+                
+                
+                {/* Section avec contenu texte */}
+                <div className="space-y-4 mt-6">
+                  <div className="h-6 bg-white/12 rounded w-full"></div>
+                  <div className="h-6 bg-white/12 rounded w-[95%]"></div>
+                  <div className="h-6 bg-white/10 rounded w-[90%]"></div>
+                  <div className="h-6 bg-white/10 rounded w-full"></div>
+                  <div className="h-6 bg-white/8 rounded w-[85%]"></div>
+                </div>
+                
+                {/* Section avec modules de formation */}
+                <div className="grid grid-cols-2 gap-4 mt-8">
+                  {[
+                    { icon: '📱', text: 'Création d\'app' },
+                    { icon: '🚀', text: 'Lancement' },
+                    { icon: '💰', text: 'Vente' },
+                    { icon: '⚡', text: 'No-code IA' }
+                  ].map((item, i) => (
+                    <div key={i} className="h-32 bg-white/8 rounded-xl border border-white/15 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                      <div className="text-3xl mb-2">{item.icon}</div>
+                      <div className="h-4 bg-white/12 rounded w-3/4"></div>
+                      <div className="h-3 bg-white/8 rounded w-1/2 mt-2"></div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Section avec liste de fonctionnalités */}
+                <div className="space-y-3 mt-8">
+                  <div className="h-5 bg-white/10 rounded w-4/5"></div>
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="flex items-center gap-3 ml-4">
+                      <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0"></div>
+                      <div className="h-4 bg-white/10 rounded flex-1"></div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Section avec timeline */}
+                <div className="grid grid-cols-3 gap-4 mt-8">
+                  {['Module 1', 'Module 2', 'Module 3'].map((text, i) => (
+                    <div key={i} className="space-y-2 p-3 bg-white/5 rounded-lg border border-white/10">
+                      <div className="h-4 bg-white/12 rounded w-3/4"></div>
+                      <div className="h-3 bg-white/8 rounded w-full"></div>
+                      <div className="h-3 bg-white/8 rounded w-5/6"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Overlay avec bouton cliquable */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none" />
+            
           </div>
 
           {/* Overlay au hover */}
           <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none" />
-        </div>
+                </div>
       </motion.div>
-    </motion.div>
+              </motion.div>
   );
 };
 
@@ -719,9 +685,10 @@ interface ExampleAppCardProps {
   url: string;
   description: string;
   previewImage?: string;
+  index?: number;
 }
 
-const ExampleAppCard = ({ title, url, description, previewImage }: ExampleAppCardProps) => {
+const ExampleAppCard = ({ title, url, description, previewImage, index = 0 }: ExampleAppCardProps) => {
   const handleClick = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -765,10 +732,14 @@ const ExampleAppCard = ({ title, url, description, previewImage }: ExampleAppCar
   return (
     <motion.div
       className="group relative cursor-pointer"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{ scale: 1.02, y: -5 }}
+      transition={{ 
+        duration: 0.5, 
+        delay: index * 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }}
       onClick={handleClick}
     >
       {/* Bordure LED animée */}
@@ -963,6 +934,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
     setCurrentView('/formation');
   };
 
+
   const handleResourcesClick = () => {
     setCurrentView('/resources');
   };
@@ -1001,21 +973,21 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               {/* Gold Bento Grid avec LEDs */}
               <GoldBentoGrid className="grid-cols-2 md:grid-cols-3 lg:grid-cols-3 auto-rows-[14rem]">
                 <GoldCard
-                  name="Booker un appel de la semaine"
-                  className="col-span-2 md:col-span-2"
-                  Icon={Calendar}
-                  background={<CallBookingBackground />}
-                  hoverContent={<CallBookingHoverAnimation />}
-                  onClick={() => setCurrentView('/book-call')}
-                />
-                
-                <GoldCard
                   name="Formation"
                   className="col-span-1 md:col-span-1"
                   Icon={BookOpen}
                   background={<FormationBackground />}
                   hoverContent={<FormationHoverAnimation />}
                   onClick={() => setCurrentView('/formation')}
+                />
+                
+                <GoldCard
+                  name="Booker un appel de la semaine"
+                  className="col-span-1 md:col-span-2"
+                  Icon={Calendar}
+                  background={<CallBookingBackground />}
+                  hoverContent={<CallBookingHoverAnimation />}
+                  onClick={() => window.open('https://cal.com/smartappacademy/rizecall', '_blank', 'noopener,noreferrer')}
                 />
                 
                 <GoldCard
@@ -1048,14 +1020,14 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               </div>
             </div>
           </div>
-        );
+            );
 
-      case '/book-call':
-        return (
+          case '/book-call':
+            return (
           <div className="min-h-screen -mt-24" style={{ overflow: 'hidden', height: '100vh' }}>
-            <SimpleCalComRedirect />
-          </div>
-        );
+                <SimpleCalComRedirect />
+              </div>
+            );
 
       case '/formation':
         return (
@@ -1080,7 +1052,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
               <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-extralight leading-tight tracking-tight text-slate-50 mb-8 text-center">
                   Ressources Graphiques
-                </h1>
+              </h1>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
                   {/* Carte 21st.dev */}
@@ -1088,6 +1060,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     title="21st.dev"
                     url="https://21st.dev/community/components"
                     description="Bibliothèque de composants UI modernes"
+                    index={0}
                   />
                   
                   {/* Carte Uiverse */}
@@ -1095,6 +1068,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     title="Uiverse"
                     url="https://uiverse.io/elements"
                     description="Éléments UI et composants open source"
+                    index={1}
                   />
                 </div>
               </div>
@@ -1117,6 +1091,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     title="C-K Couverture"
                     url="https://c-kcouverture-app.vercel.app/"
                     description="Application de gestion pour couvreurs"
+                    index={0}
                   />
                   
                   {/* Carte Planchais */}
@@ -1124,6 +1099,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     title="Planchais"
                     url="https://planchais-app-xvdn.vercel.app/"
                     description="Application de gestion pour plombiers"
+                    index={1}
                   />
                   
                   {/* Carte AOS Rénov */}
@@ -1131,6 +1107,7 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                     title="AOS Rénov"
                     url="https://aos-renov.vercel.app/"
                     description="Application de gestion pour rénovation"
+                    index={2}
                   />
                 </div>
               </div>
@@ -1286,9 +1263,9 @@ export function NewDashboardApp({ onLogout }: NewDashboardAppProps) {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        );
+        </div>
+      </div>
+    );
 
       case '/account':
         return <AccountPage onLogout={handleLogout} />;

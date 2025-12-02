@@ -83,7 +83,7 @@ interface IOSDockProps {
 
 export const IOSDock = ({ 
   onHomeClick, 
-  onCallClick, 
+  onCallClick,
   onFormationClick,
   onResourcesClick,
   onExamplesClick,
