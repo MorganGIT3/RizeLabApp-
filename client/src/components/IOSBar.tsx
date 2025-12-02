@@ -84,7 +84,7 @@ const DockItem = ({ children, tooltip }: { children: React.ReactNode; tooltip: s
 
 // Separator component
 const Separator = () => (
-  <div className="w-px h-10 bg-gradient-to-b from-transparent via-gray-500 to-transparent mx-2 opacity-50" />
+  <div className="w-px h-8 bg-gradient-to-b from-transparent via-gray-500 to-transparent mx-1.5 opacity-50" />
 );
 
 // Main dock component
@@ -94,7 +94,7 @@ const Dock = ({ children }: { children: React.ReactNode }) => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="flex items-center gap-1 px-5 py-3 bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-2xl border border-gray-700/50 rounded-2xl shadow-2xl"
+      className="flex items-center gap-1 px-3 py-2 bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-2xl border border-gray-700/50 rounded-2xl shadow-2xl"
       style={{
         boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1) inset'
       }}
@@ -145,7 +145,7 @@ export function IOSBar({ onNavigate, currentView = '/dashboard' }: IOSBarProps) 
               <DockItem key={item.path} tooltip={item.label}>
                 <button
                   onClick={() => onNavigate(item.path)}
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-200 ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200 text-gray-900 shadow-lg shadow-gray-900/50'
                       : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 text-gray-300 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600 hover:text-white'
@@ -155,7 +155,7 @@ export function IOSBar({ onNavigate, currentView = '/dashboard' }: IOSBarProps) 
                   } : {}}
                   aria-label={item.label}
                 >
-                  <item.icon className={isActive ? 'w-6 h-6' : 'w-5 h-5'} />
+                  <item.icon className={isActive ? 'w-5 h-5' : 'w-4 h-4'} />
                 </button>
               </DockItem>
             );
@@ -167,7 +167,7 @@ export function IOSBar({ onNavigate, currentView = '/dashboard' }: IOSBarProps) 
           <DockItem tooltip="Plus">
             <button
               onClick={() => onNavigate('/more')}
-              className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-200 ${
+              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
                 currentView === '/more'
                   ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200 text-gray-900 shadow-lg shadow-gray-900/50'
                   : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 text-gray-300 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600 hover:text-white'
@@ -177,7 +177,7 @@ export function IOSBar({ onNavigate, currentView = '/dashboard' }: IOSBarProps) 
               } : {}}
               aria-label="Plus d'options"
             >
-              <PlusIcon className="w-5 h-5" />
+              <PlusIcon className="w-4 h-4" />
             </button>
           </DockItem>
         </Dock>

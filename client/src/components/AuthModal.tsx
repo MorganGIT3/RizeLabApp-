@@ -100,23 +100,31 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
         return;
       }
 
-      if (data.user) {
-        console.log('Inscription réussie:', data.user);
-        
-        // Vérifier si l'email doit être confirmé
-        if (data.user.email_confirmed_at) {
-          // Email confirmé, connexion automatique
-          onAuthSuccess?.();
-          onOpenChange(false);
-        } else {
-          // Email non confirmé, afficher message
-          setError("Un email de confirmation a été envoyé. Vérifiez votre boîte de réception.");
-          // Attendre un peu puis fermer le modal
+      if (data?.user) {
+        // Si une session existe, l'utilisateur est déjà connecté
+        if (data.session) {
+          setSuccess("Compte créé avec succès !");
           setTimeout(() => {
             onAuthSuccess?.();
             onOpenChange(false);
-          }, 3000);
+          }, 1000);
+        } else if (data.user.email_confirmed_at) {
+          // Email déjà confirmé
+          setSuccess("Compte créé avec succès !");
+          setTimeout(() => {
+            onAuthSuccess?.();
+            onOpenChange(false);
+          }, 1000);
+        } else {
+          // Email nécessite confirmation mais on permet quand même l'accès
+          setSuccess("Compte créé avec succès ! Vous pouvez vous connecter.");
+          setTimeout(() => {
+            onAuthSuccess?.();
+            onOpenChange(false);
+          }, 2000);
         }
+      } else {
+        setError("Erreur : aucun utilisateur créé");
       }
     } catch (error) {
       console.error('Erreur d\'inscription:', error);
@@ -171,10 +179,11 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
             <img
               src="https://media.giphy.com/media/xJT7pzbviKNqTqF1Ps/giphy.gif"
               alt="Tunnel animation"
-              className="w-full h-full object-cover opacity-60"
+              className="w-full h-full object-cover opacity-30"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-200/80 via-gray-400/90 to-black/95" />
-            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-gray-300/30 to-gray-600/40" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-gray-900/95 to-black/98" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-800/70 to-black/90" />
+            <div className="absolute inset-0 bg-black/40" />
           </div>
 
           {/* Content */}
@@ -377,10 +386,11 @@ export function AuthModal({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
               <img
                 src="https://media.giphy.com/media/xJT7pzbviKNqTqF1Ps/giphy.gif"
                 alt="Tunnel animation"
-                className="w-full h-full object-cover opacity-60"
+                className="w-full h-full object-cover opacity-30"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-gray-200/80 via-gray-400/90 to-black/95" />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-gray-300/30 to-gray-600/40" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-gray-900/95 to-black/98" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-gray-800/70 to-black/90" />
+              <div className="absolute inset-0 bg-black/40" />
             </div>
 
             {/* Content */}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { BookOpen, Image as ImageIcon, Code, Layout } from 'lucide-react';
 
 // Icon components
 const HomeIcon = ({ className = "w-5 h-5" }) => (
@@ -73,10 +74,22 @@ const DockItem = ({ children, tooltip, onClick }: {
 interface IOSDockProps {
   onHomeClick: () => void;
   onCallClick: () => void;
+  onFormationClick?: () => void;
+  onResourcesClick?: () => void;
+  onExamplesClick?: () => void;
+  onFrameworkClick?: () => void;
   currentView?: string;
 }
 
-export const IOSDock = ({ onHomeClick, onCallClick, currentView = '/dashboard' }: IOSDockProps) => {
+export const IOSDock = ({ 
+  onHomeClick, 
+  onCallClick,
+  onFormationClick,
+  onResourcesClick,
+  onExamplesClick,
+  onFrameworkClick,
+  currentView = '/dashboard' 
+}: IOSDockProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -89,14 +102,14 @@ export const IOSDock = ({ onHomeClick, onCallClick, currentView = '/dashboard' }
         margin: '0 auto'
       }}
     >
-      <div className="flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-2xl border border-gray-700/50 rounded-3xl shadow-2xl"
+      <div className="flex items-center gap-1.5 px-3 py-2 bg-black/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl"
            style={{
              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1) inset'
            }}>
         
         {/* Home */}
         <DockItem tooltip="Dashboard" onClick={onHomeClick}>
-          <div className={`w-14 h-14 rounded-2xl transition-all duration-300 shadow-lg flex items-center justify-center ${
+          <div className={`w-10 h-10 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center ${
             currentView === '/dashboard'
               ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200'
               : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600'
@@ -104,13 +117,13 @@ export const IOSDock = ({ onHomeClick, onCallClick, currentView = '/dashboard' }
                style={currentView === '/dashboard' ? {
                  boxShadow: '0 4px 12px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.4) inset'
                } : {}}>
-            <HomeIcon className={`w-6 h-6 ${currentView === '/dashboard' ? 'text-gray-900' : 'text-gray-300'}`} />
+            <HomeIcon className={`w-5 h-5 ${currentView === '/dashboard' ? 'text-gray-900' : 'text-gray-300'}`} />
           </div>
         </DockItem>
 
         {/* Réserver un Call */}
         <DockItem tooltip="Réserver un Call" onClick={onCallClick}>
-          <div className={`w-14 h-14 rounded-2xl transition-all duration-300 shadow-lg flex items-center justify-center ${
+          <div className={`w-10 h-10 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center ${
             currentView === '/book-call'
               ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200'
               : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600'
@@ -118,10 +131,73 @@ export const IOSDock = ({ onHomeClick, onCallClick, currentView = '/dashboard' }
                style={currentView === '/book-call' ? {
                  boxShadow: '0 4px 12px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.4) inset'
                } : {}}>
-            <PhoneIcon className={`w-6 h-6 ${currentView === '/book-call' ? 'text-gray-900' : 'text-gray-300'}`} />
+            <PhoneIcon className={`w-5 h-5 ${currentView === '/book-call' ? 'text-gray-900' : 'text-gray-300'}`} />
           </div>
         </DockItem>
 
+        {/* Formation */}
+        {onFormationClick && (
+          <DockItem tooltip="Formation" onClick={onFormationClick}>
+            <div className={`w-10 h-10 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center ${
+              currentView === '/formation'
+                ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200'
+                : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600'
+            }`}
+                 style={currentView === '/formation' ? {
+                   boxShadow: '0 4px 12px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.4) inset'
+                 } : {}}>
+              <BookOpen className={`w-5 h-5 ${currentView === '/formation' ? 'text-gray-900' : 'text-gray-300'}`} />
+            </div>
+          </DockItem>
+        )}
+
+        {/* Ressources Graphiques */}
+        {onResourcesClick && (
+          <DockItem tooltip="Ressources Graphiques" onClick={onResourcesClick}>
+            <div className={`w-10 h-10 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center ${
+              currentView === '/resources'
+                ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200'
+                : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600'
+            }`}
+                 style={currentView === '/resources' ? {
+                   boxShadow: '0 4px 12px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.4) inset'
+                 } : {}}>
+              <ImageIcon className={`w-5 h-5 ${currentView === '/resources' ? 'text-gray-900' : 'text-gray-300'}`} />
+            </div>
+          </DockItem>
+        )}
+
+        {/* Application Exemple */}
+        {onExamplesClick && (
+          <DockItem tooltip="Application Exemple" onClick={onExamplesClick}>
+            <div className={`w-10 h-10 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center ${
+              currentView === '/examples'
+                ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200'
+                : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600'
+            }`}
+                 style={currentView === '/examples' ? {
+                   boxShadow: '0 4px 12px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.4) inset'
+                 } : {}}>
+              <Code className={`w-5 h-5 ${currentView === '/examples' ? 'text-gray-900' : 'text-gray-300'}`} />
+            </div>
+          </DockItem>
+        )}
+
+        {/* Framework App */}
+        {onFrameworkClick && (
+          <DockItem tooltip="Framework App" onClick={onFrameworkClick}>
+            <div className={`w-10 h-10 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center ${
+              currentView === '/framework'
+                ? 'bg-gradient-to-br from-white via-gray-100 to-gray-200'
+                : 'bg-gradient-to-br from-gray-700 via-gray-600 to-gray-700 hover:from-gray-600 hover:via-gray-500 hover:to-gray-600'
+            }`}
+                 style={currentView === '/framework' ? {
+                   boxShadow: '0 4px 12px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.4) inset'
+                 } : {}}>
+              <Layout className={`w-5 h-5 ${currentView === '/framework' ? 'text-gray-900' : 'text-gray-300'}`} />
+            </div>
+          </DockItem>
+        )}
 
       </div>
     </motion.div>
